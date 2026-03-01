@@ -272,6 +272,7 @@ button:hover {
 	font-variant: small-caps;
 	font-weight: normal;
 	margin-bottom: -0.5rem;
+	margin-top: -0.5rem;
 }
 
 #summary {
