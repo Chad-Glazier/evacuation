@@ -17,7 +17,7 @@ const INITIAL_DISTANCE = 5
  * Setting this to `1` will effectively remove all inertia, while `0` will
  * remove friction entirely.
  */
-const FRICTION = 0.025
+const FRICTION = 0.25
 
 /** The number of divisions for each sphere. */
 const SPHERE_DIVISIONS = 72

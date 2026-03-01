@@ -277,7 +277,7 @@ function main() {
 		maxDistance: 10,
 		minDistance: 3,
 		refreshRate: 60,
-		frictionCoefficient: 0.35,
+		frictionCoefficient: 0.25,
 		heatPerShot: 0.075,
 		coolingRate: 0.20,
 		projectileSpeed: 15,
@@ -466,7 +466,6 @@ function main() {
 	})
 
 	enableMouseDrag(game)
-
 	enableKeyRotationControls(game)
 
 	/** @type {[x: number, y: number]} */
@@ -498,6 +497,32 @@ function main() {
 
 	window.addEventListener("keyup", (ev) => {
 		if (ev.key !== " ") return
+
+		clearInterval(firingInterval)
+		firingInterval = NaN
+	})
+
+	window.addEventListener("mousedown", (ev) => {
+		if (game.isPaused) return
+		if (ev.button !== 0) return // ensure it's left-click
+
+		ev.preventDefault()
+
+		if (!Number.isNaN(firingInterval)) return
+
+		game.launchProjectile(
+			game.projectGameCoordinates(mousePosition)
+		)
+
+		firingInterval = setInterval(() => {
+			game.launchProjectile(
+				game.projectGameCoordinates(mousePosition)	
+			)
+		}, game.config.cannonCooldown)
+	})
+
+	window.addEventListener("mouseup", (ev) => {
+		if (ev.button !== 0) return // ensure it's left-click
 
 		clearInterval(firingInterval)
 		firingInterval = NaN
@@ -599,8 +624,9 @@ function enableMouseDrag(game) {
 	let lastRPM = 0
 	let lastAxis = [0, 0, 0]
 
-	canvas.addEventListener("mousedown", () => {
+	canvas.addEventListener("mousedown", ev => {
 		if (game.isPaused) return
+		if (ev.button !== 1) return // ensure it's clicking the mousewheel
 
 		dragging = true
 		initialTime = Date.now()
@@ -646,8 +672,9 @@ function enableMouseDrag(game) {
 		initialTime = Date.now()
 	})
 
-	canvas.addEventListener("mouseup", () => {
+	canvas.addEventListener("mouseup", ev => {
 		if (!dragging) return
+		if (ev.button !== 1) return // ensure it's clicking the mousewheel
 
 		dragging = false
 		game.setInertia(lastAxis, lastRPM)
