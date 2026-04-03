@@ -150,8 +150,8 @@ function sphere(divisions, options = {
 		// Below, we describe the the corners of a panel.
 		let topLeftCorner = vertexIndex
 		let topRightCorner = vertexIndex + 1
-		let bottomLeftCorner = topLeftCorner + azimuthalDivisions
-		let bottomRightCorner = topRightCorner + azimuthalDivisions
+		let bottomLeftCorner = topLeftCorner + (azimuthalDivisions + 1)
+		let bottomRightCorner = topRightCorner + (azimuthalDivisions + 1)
 		// Note that `vertexIndex` is less than `points.length - azimuthalDivisions`,
 		// so this loop will not iterate over the last circle at the bottom.
 		// This means that there will always be bottom-left and -right corners.
