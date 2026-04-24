@@ -169,7 +169,7 @@ function renderScene(
 	)
 	gl.uniform4fv(loc.points.uColor, new Float32Array(options.spherePointColor))
 
-	gl.drawArrays(gl.POINTS, 0, baseSphere.vertices.length)
+	gl.drawArrays(gl.POINTS, 0, baseSphere.vertices.length / 3)
 
 	// Draw the bugs
 	for (const bug of [...bugs, ...dyingBugs]) {
@@ -181,6 +181,7 @@ function renderScene(
 			bugModelViewMatrix,
 		)
 
+		//@ts-ignore
 		let innerArcLength = bug["innerArcLength"] ?? 0
 		const bugSphere = sphere(SPHERE_DIVISIONS, {
 			polarInterval: [innerArcLength, bug.arcLength],

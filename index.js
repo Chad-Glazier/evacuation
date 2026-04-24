@@ -764,6 +764,7 @@ function enableKeyRotationControls(game) {
 			}
 
 			keys.forEach((k) => activeKeyRotationEvents.add(k))
+			//@ts-ignore
 			direction[dir] = true
 			updateMomentum()
 		}
@@ -778,27 +779,11 @@ function enableKeyRotationControls(game) {
 			}
 
 			keys.forEach((k) => activeKeyRotationEvents.delete(k))
+			//@ts-ignore
 			direction[dir] = false
 			updateMomentum()
 		}
 	})
 }
 
-/**
- * This function detects whether the client is using a Firefox browser. Since
- * Firefox's implementation of OpenGL doesn't supply as many vertices as we
- * need to render the game, we notify the user at the main menu (using the
- * `<p id="summary">` element).
- */
-function checkFirefox() {
-	const summaryText = document.getElementById("summary")
-
-	if (navigator.userAgent.includes("Firefox") && summaryText) {
-		summaryText.innerText = 
-			"Warning: This game is not supported by Firefox and " +
-			"may not render correctly. Try using another browser."
-	}
-}
-
-checkFirefox()
 main()

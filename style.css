@@ -26,7 +26,7 @@ body {
 */
 button {
 	margin: 10px 10px;
-	font-family: 'Space Mono', monospace;
+	font-family: 'Zen Dots', monospace;
 	font-size: 1.75rem;
 	width: auto;
 	background-color: rgba(0, 0, 0, 0);
@@ -223,6 +223,7 @@ button:hover {
 	font-size: 2;
 	text-align: center;
 	padding-bottom: 0;
+	font-family: 'Zen Dots';
 }
 
 #lose-screen p {
@@ -269,10 +270,26 @@ button:hover {
 #heading {
 	color: #fff;
 	font-size: 3rem;
-	font-variant: small-caps;
+	text-transform: uppercase;
 	font-weight: normal;
 	margin-bottom: -0.5rem;
 	margin-top: -0.5rem;
+	font-family: 'Zen Dots';
+	background: linear-gradient(90deg, #000, #a1ffa4, #000);
+	background-repeat: no-repeat;
+	background-size: 60%;
+	animation: wave 4s linear infinite;
+	-webkit-background-clip: text;
+	-webkit-text-fill-color: rgba(0, 128, 60, 0.241);
+}
+
+@keyframes wave {
+  0% {
+    background-position: -300%;
+  }
+  100% {
+	background-position: 300%;
+  }
 }
 
 #summary {
@@ -606,9 +623,11 @@ button:hover {
 	left: 15px;
 	font-size: 4rem;
 	width: 10rem;
+	font-family: 'Space Mono', monospace;
 }
 
 #time-remaining-display::before {
+	font-family: 'Space Mono', monospace;
 	content: 'TIME UNTIL EVAC.';
 	bottom: -4rem;
 }
@@ -621,7 +640,7 @@ button:hover {
 	box-sizing: border-box;
 
 	--win-screen-width: clamp(400px, 70%, 600px);
-	--win-screen-height: clamp(400px, 80%, 550px);
+	--win-screen-height: clamp(200px, 80%, 250px);
 	width: var(--win-screen-width);
 	height: var(--win-screen-height);
 	position: fixed;
@@ -651,6 +670,7 @@ button:hover {
 #win-screen h1 {
 	font-size: 2;
 	text-align: center;
+	font-family: 'Zen Dots';
 }
 
 #win-screen table {

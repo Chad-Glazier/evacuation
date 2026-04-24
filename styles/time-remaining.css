@@ -3,9 +3,11 @@
 	left: 15px;
 	font-size: 4rem;
 	width: 10rem;
+	font-family: 'Space Mono', monospace;
 }
 
 #time-remaining-display::before {
+	font-family: 'Space Mono', monospace;
 	content: 'TIME UNTIL EVAC.';
 	bottom: -4rem;
 }

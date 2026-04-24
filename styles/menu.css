@@ -27,10 +27,26 @@
 #heading {
 	color: #fff;
 	font-size: 3rem;
-	font-variant: small-caps;
+	text-transform: uppercase;
 	font-weight: normal;
 	margin-bottom: -0.5rem;
 	margin-top: -0.5rem;
+	font-family: 'Zen Dots';
+	background: linear-gradient(90deg, #000, #a1ffa4, #000);
+	background-repeat: no-repeat;
+	background-size: 60%;
+	animation: wave 4s linear infinite;
+	-webkit-background-clip: text;
+	-webkit-text-fill-color: rgba(0, 128, 60, 0.241);
+}
+
+@keyframes wave {
+  0% {
+    background-position: -300%;
+  }
+  100% {
+	background-position: 300%;
+  }
 }
 
 #summary {
