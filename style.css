@@ -30,7 +30,7 @@ button {
 	font-size: 1.75rem;
 	width: auto;
 	background-color: rgba(0, 0, 0, 0);
-	color: white;
+	color: #eee;
 	border: 0;
 	transition: all 400ms;
 	text-transform: uppercase;
@@ -245,7 +245,7 @@ button:hover {
 	box-sizing: border-box;
 
 	--menu-height: clamp(200px, 60%, 560px);
-	--menu-width: clamp(400px, 60%, 500px);
+	--menu-width: clamp(500px, 60%, 600px);
 	overflow-y: auto;
 	width: var(--menu-width);
 	height: var(--menu-height);

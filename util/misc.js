@@ -142,7 +142,7 @@ function transform(transformations, vec) {
 	if (v.length == 3) v.push(0)
 	for (const transformation of transformations) {
 		if (transformation.length != v.length) {
-			console.log(
+			console.error(
 				`Matrix-vector multiplication not allowed, wrong sizes:\nMatrix:\n${transformation}\nVector:\n${v}`,
 			)
 			return v.map(() => NaN)

@@ -600,10 +600,6 @@ function main() {
 	game.start()
 	game.pause()
 	ui.showPauseMenu()
-
-	console.log("perspective(45, 9 / 16, 1, 10):")
-	console.log(perspective(45, 9 / 16, 1, 10))
-	console.log(inversePerspective(45, 9 / 16, 1, 10))
 }
 
 /**
