@@ -675,7 +675,7 @@ class GameState {
 		let secondsSinceLastShot = (this.time - this.timeOfLastProjectile) /
 			1000
 		if (this.overdriveActive) {
-			secondsSinceLastShot /= this.config.overdriveTemporalModifier * 4
+			secondsSinceLastShot /= this.config.overdriveTemporalModifier
 		}
 
 		if (secondsSinceLastShot < this.config.cannonCooldown) {
