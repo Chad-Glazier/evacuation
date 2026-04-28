@@ -17,3 +17,10 @@ This script will re-build the files once every second so that you don't have to 
 Since *Evacuation* is meant to have zero dependencies, that includes skipping out on TypeScript. Instead, TSDoc comments are included comprehensively which gives us the support of the TypeScript LSP while still keeping the code in vanilla JavaScript. While this ensures type-safety, the downside is that there are many, many verbose comments where a normal TypeScript codebase could simply write a type annotation in-line. If this project is ever to be expanded significantly, it's almost definitely worthwhile to refactor it into real TypeScript and forgo the "no dependencies" rule.
 
 Another notable pain point in the code is the HTML user interface (the menus, timer, etc). Since there are no dependencies, that also means there is no component framework. In lieu of this, the [ui.js](./util/ui.js) file encapsulates all logic for the HTML display. This works for now, but it's far from an ideal solution and if the project is ever expanded it should probably be refactored to use a real UI framework.
+
+### To-Do
+
+Refactor the rendering logic to optimize performance. As it is, 
+- the rendering call happens at a fixed time instead of using `requestAnimationFrame`;
+- there are constant buffer reallocations that don't need to happen, and they have a significant drag on performance;
+- the memory addresses aren't being cached.
