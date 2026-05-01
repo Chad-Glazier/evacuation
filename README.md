@@ -6,7 +6,7 @@ The cool part of this project is that it is built entirely with WebAPIs and has 
 
 ## Development Notes
 
-As I mentioned, there are no dependencies, but there is one minimal build process. Specifically, the shader source files stored in [shaders/](./shaders/) need to be built into a JavaScript file, and the separate CSS files in [styles/](./styles/) need to be bundled into a single stylesheet. To perform these steps, the [build.ts](./scripts/build.ts) script can be run via Deno. 
+As I mentioned, there are no dependencies, but there is one minimal build process. Specifically, the shader source files stored in [shaders/](./shaders/) need to be built into a JavaScript file and the separate CSS files in [styles/](./styles/) need to be bundled into a single stylesheet. To perform these steps, the [build.ts](./scripts/build.ts) script can be run via Deno. 
 
 ```sh
 deno run --allow-read --allow-write ./scripts/build.ts
