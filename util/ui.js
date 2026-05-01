@@ -92,8 +92,8 @@ class UI {
 	 */
 	set survivorCountProgress(newProgress) {
 		this.element.progressBar.survivor.style.setProperty(
-			"--progress",
-			newProgress.toString(),
+			"width",
+			`calc(${Math.min(100, Math.floor(newProgress * 100))}% - 4px)`,
 		)
 	}
 
@@ -116,11 +116,11 @@ class UI {
 		color = color.map((x) => x * 255 * 1.5)
 
 		this.element.progressBar.heat.style.setProperty(
-			"--progress",
-			newProgress.toString(),
+			"width",
+			`calc(${Math.min(100, Math.floor(newProgress * 100))}% - 4px)`,
 		)
 		this.element.progressBar.heat.style.setProperty(
-			"--inner-color",
+			"background-color",
 			`rgb(${color[0]}, ${color[1]}, ${color[2]})`,
 		)
 
@@ -141,8 +141,8 @@ class UI {
 	 */
 	set overdriveChargeProgress(newProgress) {
 		this.element.progressBar.overdrive.style.setProperty(
-			"--progress",
-			newProgress.toString(),
+			"width",
+			`calc(${Math.min(100, Math.floor(newProgress * 100))}% - 4px)`,
 		)
 		if (newProgress == 1) {
 			this.element.textDisplay.overdrive.innerHTML = `READY`

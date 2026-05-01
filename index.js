@@ -105,9 +105,12 @@ function main() {
 	)
 	const summaryDifficulty = document.getElementById("summary-difficulty")
 	// progress bars
-	const survivorBar = document.getElementById("survivor-progress-bar")
-	const overdriveBar = document.getElementById("overdrive-progress-bar")
-	const heatBar = document.getElementById("heat-progress-bar")
+	const survivorBar = document.querySelector(
+		"#survivor-progress-bar>.progress-bar-inner")
+	const overdriveBar = document.querySelector(
+		"#overdrive-progress-bar>.progress-bar-inner")
+	const heatBar = document.querySelector(
+		"#heat-progress-bar>.progress-bar-inner")
 	// slider inputs
 	const mouseSensitivitySlider = document.getElementById(
 		"mouse-sensitivity-range",
@@ -202,8 +205,11 @@ function main() {
 				summarySurvivor: summarySurvivorCount,
 			},
 			progressBar: {
+				//@ts-ignore
 				survivor: survivorBar,
+				//@ts-ignore
 				overdrive: overdriveBar,
+				//@ts-ignore
 				heat: heatBar,
 			},
 			input: {
@@ -217,44 +223,59 @@ function main() {
 			},
 		},
 		{
+			// see `styles/menu.css`
 			pauseMenu: {
 				hidden: [
-					["top", "calc(100vh + 50px)"],
+					["transform", 
+						"translateY(100vh)"],
 				],
 				shown: [
-					["top", "calc(50vh - var(--menu-height) / 2)"],
+					["transform", 
+						"translateY(0)"],
 				],
 			},
+			// see `styles/instructions.css`
 			infoPanel: {
 				hidden: [
-					["top", "calc(100vh + 50px)"],
+					["transform", 
+						"translateY(0)"],
 				],
 				shown: [
-					["top", "calc(50vh - var(--info-panel-height) / 2)"],
+					["transform", 
+						"translateY(calc(-50vh - 50px - 0.5 * var(--info-panel-height)))"],
 				],
 			},
+			// see `styles/settings.css`
 			settings: {
 				hidden: [
-					["top", "calc(100vh + 50px)"],
+					["transform", 
+						"translateY(0)"],
 				],
 				shown: [
-					["top", "calc(50vh - var(--settings-height) / 2)"],
+					["transform", 
+						"translateY(calc(-50vh - 50px - 0.5 * var(--settings-height)))"],
 				],
 			},
+			// see `styles/win-screen.css`
 			winSummary: {
 				hidden: [
-					["top", "calc(100vh + 50px)"],
+					["transform", 
+						"translateY(0)"],
 				],
 				shown: [
-					["top", "calc(50vh - var(--win-screen-height) / 2)"],
+					["transform", 
+						"translateY(calc(-50vh - 50px - 0.5 * var(--win-screen-height)))"],
 				],
 			},
+			// see `styles/lose-screen.css`
 			loseScreen: {
 				hidden: [
-					["top", "calc(100vh + 50px)"],
+					["transform", 
+						"translateY(0)"],
 				],
 				shown: [
-					["top", "calc(50vh - var(--lose-screen-height) / 2)"],
+					["transform", 
+						"translateY(calc(-50vh - 50px - 0.5 * var(--lose-screen-height)))"],
 				],
 			},
 		},
@@ -743,4 +764,4 @@ function enableKeyRotationControls(game) {
 	})
 }
 
-main()
+document.addEventListener("DOMContentLoaded", main)

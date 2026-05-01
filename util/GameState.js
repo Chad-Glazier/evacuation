@@ -41,6 +41,12 @@ class GameState {
 		this.overheated = false
 
 		/**
+		 * A flag to indicate whether or not the game animation should be 
+		 * canceled.
+		 */
+		this.cancelAnimation = false
+
+		/**
 		 * A number from `0` to `1` representing the heat of the cannon.
 		 *
 		 * @private
@@ -167,16 +173,6 @@ class GameState {
 		 * @type {Map<string, Array<(event: GameEvent) => void>>}
 		 */
 		this.listeners = new Map()
-
-		/**
-		 * Stores the ID of the main game loop, which is a `setInterval`
-		 * function. This can be used to terminate the main game loop with
-		 * `clearInterval(this.gameLoop)`.
-		 *
-		 * @private
-		 * @type {number}
-		 */
-		this.gameLoop = NaN
 
 		/**
 		 * The number of survivors lost to the bugs.
@@ -353,7 +349,7 @@ class GameState {
 
 	/**
 	 * Advances the internal clock by the specified number of milliseconds,
-	 * updating the game state as necessary. I.e.,this advances the
+	 * updating the game state as necessary. Namely, this advances the
 	 * projectiles, grows the bugs, rotates the sphere if it has momentum or
 	 * inertia, etc.
 	 *
@@ -401,6 +397,7 @@ class GameState {
 		}
 		if (this.overdriveActive) {
 			for (const unit in real) {
+				//@ts-ignore
 				real[unit] /= overdriveTemporalModifier
 			}
 		}
@@ -909,6 +906,11 @@ class GameState {
 		/** @param {number} now */
 		function draw(now) {
 
+			if (state.cancelAnimation) {
+				state.cancelAnimation = false
+				return
+			}
+
 			if (then == -1) {
 				then = now
 				requestAnimationFrame(draw)
@@ -942,7 +944,7 @@ class GameState {
 	 * @public
 	 */
 	restart() {
-		this.end()
+		this.cancelAnimation = true
 
 		this.bugs = []
 		this.dyingBugs = []
@@ -957,7 +959,6 @@ class GameState {
 		this.timeOfLastBug = 0
 		this.timeOfLastProjectile = 0
 		this.paused = false
-		this.gameLoop = NaN
 		this.casualties = 0
 		this.newSurvivors = 0
 		this.bugsEradicated = false
@@ -972,16 +973,12 @@ class GameState {
 		this.handleEvent("overdrivecharge")
 		this.handleEvent("heat")
 
-		this.start()
-	}
-
-	/**
-	 * Ends the game.
-	 *
-	 * @public
-	 */
-	end() {
-		clearInterval(this.gameLoop)
+		const waitForCancel = setInterval(() => {
+			if (!this.cancelAnimation) {
+				this.start()
+				clearInterval(waitForCancel)
+			}
+		}, 100)
 	}
 
 	/**

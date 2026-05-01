@@ -81,8 +81,6 @@ function getLocations(
 	return loc
 }
 
-
-
 /**
  * Draws the described scene into the provided rendering context.
  *
@@ -305,7 +303,7 @@ function renderScene(
 
 		gl.useProgram(rectangleShaderProgram)
 
-		gl.bindBuffer(gl.ARRAY_BUFFER, gl.createBuffer()) // buffer for distinct vertices
+		gl.bindBuffer(gl.ARRAY_BUFFER, projectile.buffers.vertices) // buffer for distinct vertices
 		gl.bufferData(gl.ARRAY_BUFFER, projectile.vertices, gl.STATIC_DRAW)
 		gl.vertexAttribPointer(
 			// @ts-ignore
@@ -319,7 +317,7 @@ function renderScene(
 		// @ts-ignore
 		gl.enableVertexAttribArray(loc.rectangle.aVertexPosition)
 
-		gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, gl.createBuffer()) // buffer for indices
+		gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, projectile.buffers.indices) // buffer for indices
 		gl.bufferData(gl.ELEMENT_ARRAY_BUFFER, projectile.indices, gl.STATIC_DRAW)
 
 		gl.uniformMatrix4fv(

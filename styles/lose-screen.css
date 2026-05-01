@@ -1,7 +1,7 @@
 #lose-screen {
 	box-sizing: border-box;
 
-	--lose-screen-width: clamp(300px, 70%, 450px);
+	--lose-screen-width: clamp(300px, 70%, 550px);
 	--lose-screen-height: clamp(200px, 80%, 300px);
 	width: var(--lose-screen-width);
 	height: var(--lose-screen-height);
@@ -12,11 +12,11 @@
 	display: flex;
 	flex-direction: column;
 	justify-content: center;
-	transition: top 400ms ease-in-out;
+	transition: transform 400ms ease-in-out;
 	border: 2px solid;
 	border-color: var(--greeen);
 	border-radius: 15px;
-	background-color: rgba(0, 0, 0, 0.5);
+	background-color: #000;
 	color: white;
 	padding: 1rem;
 	font-size: 1.1rem;

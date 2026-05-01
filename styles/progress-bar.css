@@ -58,7 +58,7 @@
 	position: relative;
 
 	background-color: rgba(0, 0, 0, 0);
-	width: calc(max(1, var(--progress)) * (var(--width) + 2 * var(--padding)));
+	width: calc((var(--width) + 2 * var(--padding)));
 	height: calc(var(--height) + 2 * var(--padding));
 	border: 2px solid var(--outer-color);
 
@@ -85,7 +85,7 @@
 	top: var(--padding);
 	left: var(--padding);
 	height: calc(var(--height));
-	width: calc((var(--width)) * var(--progress));
+	width: 0;
 
 	border-radius: 6px;
 }
