@@ -1,6 +1,10 @@
 declare type Sphere = {
 	vertices: Float32Array
 	indices: Uint16Array
+	buffer?: {
+		vertices: WebGLBuffer
+		indices: WebGLBuffer
+	}
 }
 
 declare type Options = {
@@ -11,6 +15,30 @@ declare type Options = {
 	distance?: number
 	spherePointColor?: number[]
 	sphereColor?: number[]
+}
+
+/**
+ * Represents an object that maps specific locations of values in certain 
+ * shader programs (namely, the sphere and sphere points programs).
+ */
+declare type ProgramLocations = {
+	points: {
+		aVertexPosition: number
+		uModelViewMatrix: WebGLUniformLocation
+		uProjectionMatrix: WebGLUniformLocation
+		uColor: WebGLUniformLocation
+	}
+	baseSphere: {
+		aVertexPosition: number
+		uModelViewMatrix: WebGLUniformLocation
+		uProjectionMatrix: WebGLUniformLocation
+		uColor: WebGLUniformLocation
+	}
+	rectangle: {
+		aVertexPosition: number
+		uModelViewMatrix: WebGLUniformLocation
+		uProjectionMatrix: WebGLUniformLocation
+	}
 }
 
 /**
@@ -123,6 +151,14 @@ declare type Bug = {
 	 * The `Date.now()` timestamp when the bug was spawned.
 	 */
 	spawnTime: number
+
+	/**
+	 * The memoized buffers for the bug.
+	 */
+	buffer?: {
+		vertices: WebGLBuffer
+		indices: WebGLBuffer
+	}
 }
 
 declare type DyingBug = Bug & {

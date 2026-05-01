@@ -127,6 +127,12 @@ class Projectile {
 		 * @readonly
 		 */
 		this.isNuke = isNuke
+
+		/** 
+		 * Initialize the buffers.
+		 * @type {undefined | { vertices: WebGLBuffer, indices: WebGLBuffer }}
+		 */
+		this.buffers = undefined
 	}
 
 	/**

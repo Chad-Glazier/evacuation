@@ -11,13 +11,12 @@
 	left: calc(50vw - var(--lose-screen-width) / 2);
 	display: flex;
 	flex-direction: column;
-	backdrop-filter: blur(5px);
 	justify-content: center;
 	transition: top 400ms ease-in-out;
 	border: 2px solid;
 	border-color: var(--greeen);
 	border-radius: 15px;
-	background-color: rgba(0, 0, 0, 0.3);
+	background-color: rgba(0, 0, 0, 0.5);
 	color: white;
 	padding: 1rem;
 	font-size: 1.1rem;
@@ -27,7 +26,7 @@
 	font-size: 2;
 	text-align: center;
 	padding-bottom: 0;
-	font-family: 'Zen Dots';
+	font-family: "Zen Dots";
 }
 
 #lose-screen p {

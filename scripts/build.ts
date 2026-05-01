@@ -98,6 +98,4 @@ async function build(
 	Deno.writeFile(cssOutput, cssEncoder.encode(outputString))
 }
 
-setInterval(() => {
-	build("shaders", "styles", "shaders.js", "style.css")
-}, 1000)
+build("shaders", "styles", "shaders.js", "style.css")

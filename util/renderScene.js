@@ -7,6 +7,82 @@
 /// <reference path="./Projectile.js" />
 /// <reference path="./misc.js" />
 
+
+/** @type {null | ProgramLocations} */
+let loc = null
+
+/**
+ * Gets the locations for the programs and memoizes the results.
+ * 
+ * @param {WebGLRenderingContext} gl
+ * @param {WebGLProgram} pointShaderProgram
+ * @param {WebGLProgram} sphereShaderProgram
+ * @param {WebGLProgram} rectangleShaderProgram
+ */
+function getLocations(
+	gl, pointShaderProgram, sphereShaderProgram, rectangleShaderProgram
+) {
+	if (loc == null) {
+		loc = {
+			points: {
+				aVertexPosition: gl.getAttribLocation(
+					pointShaderProgram,
+					"aVertexPosition",
+				),
+				// @ts-ignore
+				uModelViewMatrix: gl.getUniformLocation(
+					pointShaderProgram,
+					"uModelViewMatrix",
+				),
+				// @ts-ignore
+				uProjectionMatrix: gl.getUniformLocation(
+					pointShaderProgram,
+					"uProjectionMatrix",
+				),
+				// @ts-ignore
+				uColor: gl.getUniformLocation(pointShaderProgram, "uColor"),
+			},
+			baseSphere: {
+				aVertexPosition: gl.getAttribLocation(
+					sphereShaderProgram,
+					"aVertexPosition",
+				),
+				// @ts-ignore
+				uModelViewMatrix: gl.getUniformLocation(
+					sphereShaderProgram,
+					"uModelViewMatrix",
+				),
+				// @ts-ignore
+				uProjectionMatrix: gl.getUniformLocation(
+					sphereShaderProgram,
+					"uProjectionMatrix",
+				),
+				// @ts-ignore
+				uColor: gl.getUniformLocation(sphereShaderProgram, "uColor"),
+			},
+			rectangle: {
+				aVertexPosition: gl.getAttribLocation(
+					rectangleShaderProgram,
+					"aVertexPosition",
+				),
+				// @ts-ignore
+				uModelViewMatrix: gl.getUniformLocation(
+					rectangleShaderProgram,
+					"uModelViewMatrix",
+				),
+				// @ts-ignore
+				uProjectionMatrix: gl.getUniformLocation(
+					rectangleShaderProgram,
+					"uProjectionMatrix",
+				),
+			},
+		}
+	}
+	return loc
+}
+
+
+
 /**
  * Draws the described scene into the provided rendering context.
  *
@@ -62,52 +138,9 @@ function renderScene(
 	gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT)
 
 	// Locations of attributes and uniforms in the shaders.
-	const loc = {
-		points: {
-			aVertexPosition: gl.getAttribLocation(
-				pointShaderProgram,
-				"aVertexPosition",
-			),
-			uModelViewMatrix: gl.getUniformLocation(
-				pointShaderProgram,
-				"uModelViewMatrix",
-			),
-			uProjectionMatrix: gl.getUniformLocation(
-				pointShaderProgram,
-				"uProjectionMatrix",
-			),
-			uColor: gl.getUniformLocation(pointShaderProgram, "uColor"),
-		},
-		baseSphere: {
-			aVertexPosition: gl.getAttribLocation(
-				sphereShaderProgram,
-				"aVertexPosition",
-			),
-			uModelViewMatrix: gl.getUniformLocation(
-				sphereShaderProgram,
-				"uModelViewMatrix",
-			),
-			uProjectionMatrix: gl.getUniformLocation(
-				sphereShaderProgram,
-				"uProjectionMatrix",
-			),
-			uColor: gl.getUniformLocation(sphereShaderProgram, "uColor"),
-		},
-		rectangle: {
-			aVertexPosition: gl.getAttribLocation(
-				rectangleShaderProgram,
-				"aVertexPosition",
-			),
-			uModelViewMatrix: gl.getUniformLocation(
-				rectangleShaderProgram,
-				"uModelViewMatrix",
-			),
-			uProjectionMatrix: gl.getUniformLocation(
-				rectangleShaderProgram,
-				"uProjectionMatrix",
-			),
-		},
-	}
+	const loc = getLocations(
+		gl, pointShaderProgram, sphereShaderProgram, rectangleShaderProgram
+	)
 
 	// Create the model view matrix, which factors in rotations and distance
 	// (along the z-axis), based on the `options` argument.
@@ -119,27 +152,39 @@ function renderScene(
 		modelViewMatrix,
 	)
 
+	if (!baseSphere.buffer) {
+		baseSphere.buffer = {
+			vertices: gl.createBuffer(),
+			indices: gl.createBuffer(),
+		}
+	}
+
 	// Draw the base sphere.
 	gl.useProgram(sphereShaderProgram)
 
-	gl.bindBuffer(gl.ARRAY_BUFFER, gl.createBuffer()) // buffer for distinct vertices
+	gl.bindBuffer(gl.ARRAY_BUFFER, baseSphere.buffer.vertices) // buffer for distinct vertices
 	gl.bufferData(gl.ARRAY_BUFFER, baseSphere.vertices, gl.STATIC_DRAW)
+	// @ts-ignore
 	gl.vertexAttribPointer(loc.points.aVertexPosition, 3, gl.FLOAT, false, 0, 0)
+	// @ts-ignore
 	gl.enableVertexAttribArray(loc.points.aVertexPosition)
 
-	gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, gl.createBuffer()) // buffer for indices
+	gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, baseSphere.buffer.indices) // buffer for indices
 	gl.bufferData(gl.ELEMENT_ARRAY_BUFFER, baseSphere.indices, gl.STATIC_DRAW)
 
 	gl.uniformMatrix4fv(
+		// @ts-ignore
 		loc.baseSphere.uProjectionMatrix,
 		false,
 		flatten(projectionMatrix),
 	)
 	gl.uniformMatrix4fv(
+		// @ts-ignore
 		loc.baseSphere.uModelViewMatrix,
 		false,
 		flatten(modelViewMatrix),
 	)
+	// @ts-ignore
 	gl.uniform4fv(loc.baseSphere.uColor, new Float32Array(options.sphereColor))
 
 	gl.drawElements(
@@ -152,21 +197,28 @@ function renderScene(
 	// Draw the points.
 	gl.useProgram(pointShaderProgram)
 
-	gl.bindBuffer(gl.ARRAY_BUFFER, gl.createBuffer())
-	gl.bufferData(gl.ARRAY_BUFFER, baseSphere.vertices, gl.STATIC_DRAW)
+	gl.bindBuffer(gl.ARRAY_BUFFER, baseSphere.buffer.vertices)
+	// The vertices were already loaded when rendering the sphere, so we don't
+	// need to reload them here.
+	// gl.bufferData(gl.ARRAY_BUFFER, baseSphere.vertices, gl.STATIC_DRAW)
+	// @ts-ignore
 	gl.vertexAttribPointer(loc.points.aVertexPosition, 3, gl.FLOAT, false, 0, 0)
+	// @ts-ignore
 	gl.enableVertexAttribArray(loc.points.aVertexPosition)
 
 	gl.uniformMatrix4fv(
+		// @ts-ignore
 		loc.points.uProjectionMatrix,
 		false,
 		flatten(projectionMatrix),
 	)
 	gl.uniformMatrix4fv(
+		// @ts-ignore
 		loc.points.uModelViewMatrix,
 		false,
 		flatten(modelViewMatrix),
 	)
+	// @ts-ignore
 	gl.uniform4fv(loc.points.uColor, new Float32Array(options.spherePointColor))
 
 	gl.drawArrays(gl.POINTS, 0, baseSphere.vertices.length / 3)
@@ -191,11 +243,20 @@ function renderScene(
 			isCone: true,
 		})
 
+		// Initialize buffers if needed.
+		if (!bug.buffer) {
+			bug.buffer = {
+				vertices: gl.createBuffer(),
+				indices: gl.createBuffer()
+			}
+		}
+
 		gl.useProgram(sphereShaderProgram)
 
-		gl.bindBuffer(gl.ARRAY_BUFFER, gl.createBuffer()) // buffer for distinct vertices
+		gl.bindBuffer(gl.ARRAY_BUFFER, bug.buffer.vertices) // buffer for distinct vertices
 		gl.bufferData(gl.ARRAY_BUFFER, bugSphere.vertices, gl.STATIC_DRAW)
 		gl.vertexAttribPointer(
+			// @ts-ignore
 			loc.points.aVertexPosition,
 			3,
 			gl.FLOAT,
@@ -203,21 +264,25 @@ function renderScene(
 			0,
 			0,
 		)
+		// @ts-ignore
 		gl.enableVertexAttribArray(loc.points.aVertexPosition)
 
-		gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, gl.createBuffer()) // buffer for indices
+		gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, bug.buffer.indices) // buffer for indices
 		gl.bufferData(gl.ELEMENT_ARRAY_BUFFER, bugSphere.indices, gl.STATIC_DRAW)
 
 		gl.uniformMatrix4fv(
+			// @ts-ignore
 			loc.baseSphere.uProjectionMatrix,
 			false,
 			flatten(projectionMatrix),
 		)
 		gl.uniformMatrix4fv(
+			// @ts-ignore
 			loc.baseSphere.uModelViewMatrix,
 			false,
 			flatten(bugModelViewMatrix),
 		)
+		// @ts-ignore
 		gl.uniform4fv(loc.baseSphere.uColor, new Float32Array(bug.color))
 
 		gl.drawElements(
@@ -230,15 +295,20 @@ function renderScene(
 
 	// Draw the projectiles
 	for (const projectile of projectiles) {
-		// let projectileMVMatrix = mat4()
-		// projectileMVMatrix = mult(options.rotate, projectileMVMatrix)
-		// projectileMVMatrix = mult(translate(0, 0, -1 * options.distance), projectileMVMatrix)
+
+		if (!projectile.buffers) {
+			projectile.buffers = {
+				vertices: gl.createBuffer(),
+				indices: gl.createBuffer(),
+			}
+		}
 
 		gl.useProgram(rectangleShaderProgram)
 
 		gl.bindBuffer(gl.ARRAY_BUFFER, gl.createBuffer()) // buffer for distinct vertices
 		gl.bufferData(gl.ARRAY_BUFFER, projectile.vertices, gl.STATIC_DRAW)
 		gl.vertexAttribPointer(
+			// @ts-ignore
 			loc.rectangle.aVertexPosition,
 			3,
 			gl.FLOAT,
@@ -246,17 +316,20 @@ function renderScene(
 			0,
 			0,
 		)
+		// @ts-ignore
 		gl.enableVertexAttribArray(loc.rectangle.aVertexPosition)
 
 		gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, gl.createBuffer()) // buffer for indices
 		gl.bufferData(gl.ELEMENT_ARRAY_BUFFER, projectile.indices, gl.STATIC_DRAW)
 
 		gl.uniformMatrix4fv(
+			// @ts-ignore
 			loc.rectangle.uProjectionMatrix,
 			false,
 			flatten(projectionMatrix),
 		)
 		gl.uniformMatrix4fv(
+			// @ts-ignore
 			loc.rectangle.uModelViewMatrix,
 			false,
 			flatten(modelViewMatrix),

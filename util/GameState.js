@@ -884,7 +884,6 @@ class GameState {
 	 * @public
 	 */
 	start() {
-		const millisecondInterval = 1 / this.config.refreshRate * 1000
 
 		this.render()
 		this.handleEvent("score")
@@ -894,20 +893,47 @@ class GameState {
 		this.handleEvent("overdrivecharge")
 		this.handleEvent("heat")
 
-		let lastTime = Date.now()
-		this.gameLoop = setInterval(() => {
-			if (this.paused) {
-				lastTime = Date.now()
+		requestAnimationFrame(this.drawFunc(this))
+	}
+
+	/**
+	 * Produces a recursive rendering function. When the game is started, you
+	 * should call `requestAnimationFrame(drawFunc(this))`, assuming that 
+	 * `this` refers to the current game state.
+	 * 
+	 * @param {GameState} state The current game state.
+	 */
+	drawFunc(state) {
+
+		let then = -1
+		/** @param {number} now */
+		function draw(now) {
+
+			if (then == -1) {
+				then = now
+				requestAnimationFrame(draw)
 				return
 			}
-			let interval = Date.now() - lastTime
-			if (this.overdriveActive) {
-				interval *= this.config.overdriveTemporalModifier
+
+			if (state.paused) {
+				then = now
+				requestAnimationFrame(draw)
+				return
 			}
-			this.advanceTime(interval)
-			lastTime = Date.now()
-			requestAnimationFrame(() => this.render())
-		}, millisecondInterval)
+
+			let interval = now - then
+			then = now
+			if (state.overdriveActive) {
+				interval *= state.config.overdriveTemporalModifier
+			}
+
+			state.advanceTime(interval)
+			state.render()
+
+			requestAnimationFrame(draw)
+		}
+
+		return draw
 	}
 
 	/**
