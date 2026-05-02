@@ -332,3 +332,4 @@ declare type UINotificationType =
 	| "overdriveready"
 	| "nukeready"
 	| "overheated"
+	| "startmessage"

@@ -128,6 +128,9 @@ function main() {
 	const nukeReadyNotification = document.getElementById(
 		"nuke-ready-notification",
 	)
+	const startNotification = document.getElementById(
+		"start-notification",
+	)
 
 	if (
 		pauseMenu == null ||
@@ -156,6 +159,7 @@ function main() {
 		overheatedNotification == null ||
 		overdriveReadyNotification == null ||
 		nukeReadyNotification == null ||
+		startNotification == null ||
 		winSummary == null ||
 		winSummaryReturn == null ||
 		summaryDifficulty == null ||
@@ -220,6 +224,7 @@ function main() {
 				"nukeready": nukeReadyNotification,
 				"overdriveready": overdriveReadyNotification,
 				"overheated": overheatedNotification,
+				"startmessage": startNotification
 			},
 		},
 		{
@@ -299,6 +304,16 @@ function main() {
 	// Sync the UI's display with the game state.
 	//
 
+	let displayedStartMessage = false
+	game.on("unpause", () => {
+		if (displayedStartMessage) return
+
+		displayedStartMessage = true
+		ui.showNotification("startmessage")
+		setTimeout(() => {
+			ui.hideNotification("startmessage")
+		}, 4000)
+	})
 	game.on("score", ({ score }) => ui.score = score)
 	game.on("coverage", ({ coverage }) => ui.coverage = coverage)
 	game.on("survivor", ({ survivors }) => {
@@ -519,39 +534,39 @@ function main() {
 
 	ui.element.button.decreaseDifficulty.addEventListener("click", () => {
 		switch (game.difficultySetting) {
-			case "easy":
-				return
-			case "normal":
-				ui.difficulty = "easy"
-				game.difficultySetting = "easy"
-				break
-			case "hard":
-				ui.difficulty = "normal"
-				game.difficultySetting = "normal"
-				break
-			case "apocalypse":
-				ui.difficulty = "hard"
-				game.difficultySetting = "hard"
-				break
+		case "easy":
+			return
+		case "normal":
+			ui.difficulty = "easy"
+			game.difficultySetting = "easy"
+			break
+		case "hard":
+			ui.difficulty = "normal"
+			game.difficultySetting = "normal"
+			break
+		case "apocalypse":
+			ui.difficulty = "hard"
+			game.difficultySetting = "hard"
+			break
 		}
 	})
 
 	ui.element.button.increaseDifficulty.addEventListener("click", () => {
 		switch (game.difficultySetting) {
-			case "easy":
-				ui.difficulty = "normal"
-				game.difficultySetting = "normal"
-				break
-			case "normal":
-				ui.difficulty = "hard"
-				game.difficultySetting = "hard"
-				break
-			case "hard":
-				ui.difficulty = "apocalypse"
-				game.difficultySetting = "apocalypse"
-				break
-			case "apocalypse":
-				return
+		case "easy":
+			ui.difficulty = "normal"
+			game.difficultySetting = "normal"
+			break
+		case "normal":
+			ui.difficulty = "hard"
+			game.difficultySetting = "hard"
+			break
+		case "hard":
+			ui.difficulty = "apocalypse"
+			game.difficultySetting = "apocalypse"
+			break
+		case "apocalypse":
+			return
 		}
 	})
 
