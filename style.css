@@ -271,8 +271,8 @@ button:hover {
 	border-top: 2px solid;
 	border-bottom: 2px solid;
 	border-color: #7efc82;
-	backdrop-filter: blur(5px);
-	background-color: rgba(0, 0, 0, 0.5);
+	backdrop-filter: blur(3px);
+	background-color: rgba(0, 0, 0, 0.3);
 	padding: 0;
 	margin: 0;
 }
