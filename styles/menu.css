@@ -2,12 +2,12 @@
 	box-sizing: border-box;
 
 	--menu-height: clamp(200px, 60%, 560px);
-	--menu-width: clamp(500px, 60%, 600px);
+	--menu-width: clamp(560px, 800px, 95vw);
 	overflow-y: auto;
 	width: var(--menu-width);
 	height: var(--menu-height);
 	position: fixed;
-	z-index: 4;
+	z-index: 3.5;
 	top: calc(50vh - 0.5 * var(--menu-height));
 	left: calc(50vw - 0.5 * var(--menu-width));
 	display: flex;
@@ -15,10 +15,11 @@
 	justify-content: center;
 	align-items: center;
 	transition: transform 400ms ease-in-out;
-	border: 2px solid;
+	border-top: 2px solid;
+	border-bottom: 2px solid;
 	border-color: #7efc82;
-	border-radius: 15px;
-	background-color: #000;
+	backdrop-filter: blur(5px);
+	background-color: rgba(0, 0, 0, 0.5);
 	padding: 0;
 	margin: 0;
 }
@@ -34,7 +35,7 @@
 
 #heading {
 	color: #fff;
-	font-size: 3rem;
+	font-size: 4rem;
 	text-transform: uppercase;
 	font-weight: normal;
 	margin-bottom: -0.5rem;
@@ -42,9 +43,9 @@
 	font-family: "Zen Dots";
 	background: linear-gradient(
 		90deg,
-		rgba(0, 0, 0, 0.5),
+		rgba(0, 0, 0, 0),
 		#7efc82,
-		rgba(0, 0, 0, 0.5)
+		rgba(0, 0, 0, 0)
 	);
 	background-repeat: no-repeat;
 	background-size: 60%;

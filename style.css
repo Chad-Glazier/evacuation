@@ -76,7 +76,7 @@ button:hover {
 #instructions {
 	box-sizing: border-box;
 
-	--info-panel-width: clamp(400px, 70%, 750px);
+	--info-panel-width: clamp(500px, 70%, 750px);
 	--info-panel-height: clamp(400px, 80vh, 700px);
 	width: var(--info-panel-width);
 	height: var(--info-panel-height);
@@ -103,19 +103,28 @@ button:hover {
 	flex-direction: column;
 }
 
+#instructions table {
+	width: min(100%, 550px);
+	align-self: center;
+}
+
 #instructions tr {
 	display: flex;
 	flex-direction: row;
 	justify-content: space-evenly;
 	align-items: center;
-	margin: 10px 0;
 }
 
 #instructions td {
+	flex-grow: 1;
 	display: flex;
 	flex-direction: row;
-	justify-content: center;
+	justify-content: flex-end;
 	align-items: center;
+}
+
+#instructions tr td:first-child {
+	justify-content: flex-start;
 }
 
 #instructions-return-button {
@@ -123,6 +132,10 @@ button:hover {
 	bottom: -60px;
 	right: 0;
 	border-bottom: 2px solid var(--greeen);
+}
+
+.red {
+	color: rgb(189, 0, 0);
 }
 
 
@@ -242,12 +255,12 @@ button:hover {
 	box-sizing: border-box;
 
 	--menu-height: clamp(200px, 60%, 560px);
-	--menu-width: clamp(500px, 60%, 600px);
+	--menu-width: clamp(560px, 800px, 95vw);
 	overflow-y: auto;
 	width: var(--menu-width);
 	height: var(--menu-height);
 	position: fixed;
-	z-index: 4;
+	z-index: 3.5;
 	top: calc(50vh - 0.5 * var(--menu-height));
 	left: calc(50vw - 0.5 * var(--menu-width));
 	display: flex;
@@ -255,10 +268,11 @@ button:hover {
 	justify-content: center;
 	align-items: center;
 	transition: transform 400ms ease-in-out;
-	border: 2px solid;
+	border-top: 2px solid;
+	border-bottom: 2px solid;
 	border-color: #7efc82;
-	border-radius: 15px;
-	background-color: #000;
+	backdrop-filter: blur(5px);
+	background-color: rgba(0, 0, 0, 0.5);
 	padding: 0;
 	margin: 0;
 }
@@ -274,7 +288,7 @@ button:hover {
 
 #heading {
 	color: #fff;
-	font-size: 3rem;
+	font-size: 4rem;
 	text-transform: uppercase;
 	font-weight: normal;
 	margin-bottom: -0.5rem;
@@ -282,9 +296,9 @@ button:hover {
 	font-family: "Zen Dots";
 	background: linear-gradient(
 		90deg,
-		rgba(0, 0, 0, 0.5),
+		rgba(0, 0, 0, 0),
 		#7efc82,
-		rgba(0, 0, 0, 0.5)
+		rgba(0, 0, 0, 0)
 	);
 	background-repeat: no-repeat;
 	background-size: 60%;
@@ -423,7 +437,7 @@ button:hover {
 
 #heat-progress-bar {
 	--inner-color: rgb(74, 216, 255);
-	--caption-color: var(--inner-color);
+	--caption-color: #ccc;
 	--caption: 'Cannon Temperature';
 	--progress: 0.0;
 }

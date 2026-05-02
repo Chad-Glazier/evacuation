@@ -46,19 +46,6 @@
 	<script src="util/misc.js"></script>
 	<script src="constants.js"></script>
 
-	<!-- My HTML user interface (mostly menu stuff). -->
-
-	<menu id="menu">
-		<h1 id="heading">Evacuation</h1>
-		<p id="summary">
-			Hold off the invasion long enough to complete a planet-wide evacuation.
-		</p>
-		<button id="play-button">Play</button>
-		<button id="restart-button">Restart</button>
-		<button id="instructions-button">Instructions</button>
-		<button id="settings-button">Settings</button>
-	</menu>
-
 	<div id="win-screen">
 		<h1>EVACUATION COMPLETE</h1>
 		<!-- <img src="img/your-did-it-star.png"> -->
@@ -162,19 +149,10 @@
 			<p>
 				Your goal is to destroy any bug outbreaks until the planet is evacuated. The <strong>COVERAGE</strong>
 				represents the proportion of the planet that is currently controlled by the bugs. While more than
-				20% of the planet is covered, the remaining <strong>SURVIVORS</strong> will suffer casualties
+				20% of the planet is covered, the remaining <strong class="red">SURVIVORS</strong> will suffer casualties
 				at an increasing rate. While below this threshold, more survivors can be found. Your objective is
 				to rescue as many survivors as possible.
 			</p>
-
-			Note the following:
-
-			<ul>
-				<li>Firing the cannon excessively may cause it to <strong>OVERHEAT</strong>. When this
-					happens, you must wait until it is completely cooled before you can fire it again.</li>
-				<li><strong>OVERDRIVE</strong> can be used to instantly and completely cool the cannon
-					and briefly override temporal inhibitors.</li>
-			</ul>
 			
 			<h1>CONTROLS</h1>
 
@@ -229,7 +207,7 @@
 							<div class="key q">Q</div>
 						</td>
 						<td>
-							Activates overdrive if it's ready.
+							Activates overdrive.
 						</td>
 					</tr>
 				</tbody>
@@ -266,5 +244,18 @@
 	<div id="time-remaining" class="text-display">
 		<span id="time-remaining-display"></span>
 	</div>
+
+	<!-- My HTML user interface (mostly menu stuff). -->
+
+	<menu id="menu">
+		<h1 id="heading">Evacuation</h1>
+		<p id="summary">
+			Hold off the invasion long enough to complete a planet-wide evacuation.
+		</p>
+		<button id="play-button">Play</button>
+		<button id="restart-button">Restart</button>
+		<button id="instructions-button">Instructions</button>
+		<button id="settings-button">Settings</button>
+	</menu>
 </body>
 </html>

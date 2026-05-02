@@ -49,7 +49,7 @@
 
 #heat-progress-bar {
 	--inner-color: rgb(74, 216, 255);
-	--caption-color: var(--inner-color);
+	--caption-color: #ccc;
 	--caption: 'Cannon Temperature';
 	--progress: 0.0;
 }
