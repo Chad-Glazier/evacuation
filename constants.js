@@ -39,7 +39,6 @@ const DEFAULT_GAME_OPTIONS = {
 	startingDistance: 5,
 	maxDistance: 10,
 	minDistance: 3,
-	refreshRate: 60,
 	frictionCoefficient: 0.25,
 	heatPerShot: 0.075,
 	coolingRate: 0.20,
@@ -62,8 +61,8 @@ const DEFAULT_GAME_OPTIONS = {
 	difficultyModifiers: {
 		easy: 2,
 		normal: 3,
-		hard: 4,
-		apocalypse: 5,
+		hard: 3.5,
+		apocalypse: 4.5,
 	},
 	dyingBugColor: [0.78, 0.24, 0.24, 1.0],
 }

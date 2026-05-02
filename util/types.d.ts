@@ -186,7 +186,6 @@ declare type GameOptions = {
 	startingDistance: number
 	maxDistance: number
 	minDistance: number
-	refreshRate: number
 	frictionCoefficient: number
 	projectileSpeed: number
 	bugGrowthRate: number
