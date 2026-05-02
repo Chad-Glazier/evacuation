@@ -1,4 +1,5 @@
 // @ts-check
+/// <reference path="./util/types.d.ts" />
 
 /** The `id` of the `<canvas>` element in the HTML document. */
 const CANVAS_ID = "gl-canvas"
@@ -59,10 +60,10 @@ const DEFAULT_GAME_OPTIONS = {
 	keyRotationRPM: 20,
 	bugCapacity: 8,
 	difficultyModifiers: {
-		easy: 1,
-		normal: 2,
-		hard: 3,
-		apocalypse: 4,
+		easy: 2,
+		normal: 3,
+		hard: 4,
+		apocalypse: 5,
 	},
 	dyingBugColor: [0.78, 0.24, 0.24, 1.0],
 }
