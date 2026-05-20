@@ -60,8 +60,8 @@
 	background-color: rgba(0, 0, 0, 0);
 	width: calc((var(--width) + 2 * var(--padding)));
 	height: calc(var(--height) + 2 * var(--padding));
-	border-left: 2px solid var(--outer-color);
-	border-bottom: 2px solid var(--outer-color);
+	border: 2px solid var(--outer-color);
+    border-radius: 8px;
 
 	margin-bottom: var(--caption-size);
 }
@@ -86,7 +86,7 @@
 	height: calc(var(--height));
 	width: 0;
 
-	/* border-radius: 6px; */
+	border-radius: 4px;
 }
 
 .progress-bar .progress-bar-text {
